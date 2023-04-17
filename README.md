@@ -27,6 +27,7 @@ To set up this bot, follow these steps:
 -   `titles.json` -> as already said, contains custom headlines for the MR notifications. Every time there's a new MR, a random headline is taken from there.
 
 3. Run `npm run watch`
+4. Create a new webhook on GitLab by navigating to the project's settings page and selecting "Webhooks" from the left-hand menu. Set the IP address of the server running the GitLab Discord Bot and select "Merge Request Events" as the trigger. This will allow the bot to receive data on new merge requests. Note that support for new comments on MRs and pipeline statuses will be added in the future.
 
 ## Usage on Discord
 
