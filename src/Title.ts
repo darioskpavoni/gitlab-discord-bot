@@ -2,7 +2,7 @@ import fs from "fs";
 
 export class Title {
     public static random() {
-        if (!fs.existsSync(process.env.TITLES_FILE as string)) {
+        if (process.env.TITLES_FILE === "") {
             return `You have a new MR`;
         }
         const titles = JSON.parse(

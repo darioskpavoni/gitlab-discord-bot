@@ -88,7 +88,7 @@ export class Bot {
                 {
                     name: Commands.MR,
                     description:
-                        "Your MRs to review. Spoiler: the fewer, the better!z`",
+                        "Your MRs to review. Spoiler: the fewer, the better!`",
                 },
             ];
 
