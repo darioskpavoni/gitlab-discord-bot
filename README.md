@@ -2,7 +2,7 @@
 
 ## Introduction
 
-GitLab Discord Bot is a customized bot that helps you to manage and organize your GitLab merge requests and notifications on Discord. If you're struggling with managing your GitLab MRs, this bot might help you to solve your problems.
+Behold, the GitLab Discord Bot - a custom solution that delivers instant notifications and comprehensive lists of active merge requests assigned to you! Struggling to stay on top of your GitLab MRs? Say goodbye to organizational headaches and let this bot revolutionize your workflow. Keep in mind that while the bot does not let you manage your MRs, it provides valuable data on new requests and active assignments with ease.
 
 ## Motivation
 
