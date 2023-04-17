@@ -1,0 +1,6 @@
+{
+    "Name Surname": {
+        "username": "myusername",
+        "discriminator": "1111"
+    }
+}

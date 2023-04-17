@@ -1,0 +1,25 @@
+{
+    "name": "gitlab-discord-bot",
+    "version": "1.0.0",
+    "description": "Send MR notifications from Gitlab to Discord",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "npx nodemon -e ts,.env src/main.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "^4.17.17",
+        "@types/node": "^18.15.11",
+        "nodemon": "^2.0.22",
+        "ts-node": "^10.9.1"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "discord.js": "^14.9.0",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2"
+    }
+}
