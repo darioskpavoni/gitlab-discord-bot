@@ -282,7 +282,7 @@ export class Bot {
             const discordUserID = this.discordUserMap.get(rev) as string;
             if (rev === assignee || !discordUserID) {
                 // Comment next line if you want to receive notifications about your own MRs => useful for testing
-                // continue;
+                continue;
             }
 
             const embed = new EmbedBuilder()
