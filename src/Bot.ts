@@ -282,7 +282,7 @@ export class Bot {
             const discordUserID = this.discordUserMap.get(rev) as string;
             if (rev === assignee || !discordUserID) {
                 // Comment next line if you want to receive notifications about your own MRs => useful for testing
-                continue;
+                // continue;
             }
 
             const embed = new EmbedBuilder()
@@ -335,9 +335,17 @@ export class Bot {
                 }
             }
 
-            // get user's MRs from gitlab
-            const data = await fetch(
-                `https://gitlab.com/api/v4/projects/${process.env.GITLAB_PROJECT_ID}/merge_requests?reviewer_id=${gitlabUserID}&state=opened`,
+            console.log(gitlabUserID);
+
+            /**
+             * I can't combine the following calls into one for some reason, so I need to make 2 calls
+             * From the results of the first array, I remove the ones in the second array
+             * The resulting array is only open MRs that have not been approved by the reviewer yet, and no drafts
+             */
+
+            // Get first array of MRs
+            const data1 = await fetch(
+                `https://gitlab.com/api/v4/projects/${process.env.GITLAB_PROJECT_ID}/merge_requests?scope=all&state=opened&reviewer_id=${gitlabUserID}&wip=no`,
                 {
                     headers: {
                         "PRIVATE-TOKEN": process.env
@@ -345,12 +353,36 @@ export class Bot {
                     },
                 }
             );
-            const mrs = await data.json();
+            const mr1 = await data1.json();
 
-            // put each MR in the embed
+            // Get second array of MRs
+            const data2 = await fetch(
+                `https://gitlab.com/api/v4/projects/${process.env.GITLAB_PROJECT_ID}/merge_requests?approved_by_ids[]=${gitlabUserID}`,
+                {
+                    headers: {
+                        "PRIVATE-TOKEN": process.env
+                            .GITLAB_BOT_API_TOKEN as string,
+                    },
+                }
+            );
+            const mr2 = await data2.json();
+
+            // Take first array and remove the common items found in the second array, results are in a new array
+            const mrs = mr1.filter(
+                (i: any) => !mr2.find((j: any) => i.iid === j.iid)
+            );
+
+            console.log(mrs);
+
+            // Put each MR in the embed
             const embed = new EmbedBuilder()
                 .setColor(0x0099ff)
                 .setTitle("MRs to review");
+
+            if (!mrs) {
+                embed.setTitle("You don't have any MRs to review!");
+                return resolve(embed);
+            }
 
             mrs.map((mr: any) => {
                 embed.addFields({

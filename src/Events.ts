@@ -26,12 +26,18 @@ export class Events {
     }
 
     private static handleMR(event: any) {
-        const isDraft =
-            event.object_attributes.detailed_merge_status === "draft_status"
+        // No notifications on: draft MRs, approval/unapproval events, MR updated
+        const isDraft = event.object_attributes.work_in_progress ? true : false;
+        const isApprovalOrUnapproval =
+            event.object_attributes.action === "approval" ||
+            event.object_attributes.action === "unapproval"
                 ? true
                 : false;
+        const isUpdate = event.object_attributes.oldrev ? true : false;
 
-        if (isDraft) {
+        // TODO: Find a way to detect threads resolved and not send notification if approved already. If not approved, just modify the notification to say "Threads solved on MR" -> Check the incoming MR id against the final mrs array in /mr (those mrs are unapproved). If MR is also in that array, send notification, otherwise skip
+
+        if (isDraft || isApprovalOrUnapproval || isUpdate) {
             return;
         }
 
